@@ -3,7 +3,7 @@ import Tabs from "./Tabs";
 export default function Navbar() {
   return (
     <>
-      <div className="navbar bg-base-100 shadow-md">
+      <div className="navbar bg-base-100 shadow-md fixed inset-x-100 top-0">
         <div className="navbar-start">
             {/* Compact navigation bar */}
           <div className="dropdown">
