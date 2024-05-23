@@ -1,11 +1,16 @@
-import Tabs from "./Tabs";
+import Tabs from "./tabs/Tabs";
+import TabsButton from "./tabs/TabsButton";
+import { MyContext } from "../GlobalVariableProvider";
+import { useContext } from "react";
+import { TabNames } from "./tabs/TabNames";
 
 export default function Navbar() {
+  const { globalVariable, setGlobalVariable } = useContext(MyContext);
   return (
     <>
       <div className="navbar bg-base-100 shadow-md fixed inset-x-100 top-0">
         <div className="navbar-start">
-            {/* Compact navigation bar */}
+          {/* Compact navigation bar */}
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -28,18 +33,32 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Item 1</a>
+                <TabsButton
+                  classProperties="tab"
+                  isSelected={globalVariable == TabNames.tab1}
+                  onClick={() => setGlobalVariable(TabNames.tab1)}
+                >
+                  Menu
+                </TabsButton>
               </li>
               <li>
-                <a>Item 2</a>
-              </li>
-              <li>
-                <a>Item 3</a>
+                <TabsButton
+                  classProperties="tab"
+                  isSelected={globalVariable == TabNames.tab2}
+                  onClick={() => setGlobalVariable(TabNames.tab2)}
+                >
+                  Albums
+                </TabsButton>
               </li>
             </ul>
           </div>
           {/* Normal navigation bar */}
-          <a className="btn btn-ghost text-xl">iTunes albums</a>
+          <TabsButton
+            classProperties="btn btn-ghost text-xl"
+            onClick={() => setGlobalVariable(TabNames.tab1)}
+          >
+            iTunes albums
+          </TabsButton>
         </div>
         <div className="navbar-center hidden lg:flex">
           <Tabs></Tabs>
