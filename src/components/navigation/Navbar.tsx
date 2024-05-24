@@ -1,14 +1,16 @@
 import Tabs from "./tabs/Tabs";
 import TabsButton from "./tabs/TabsButton";
 import { MyContext } from "../GlobalVariableProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TabNames } from "./tabs/TabNames";
+import ThemeController from "./ThemeController";
 
 export default function Navbar() {
   const { globalVariable, setGlobalVariable } = useContext(MyContext);
+  
   return (
     <>
-      <div className="navbar bg-base-100 shadow-md fixed inset-x-100 top-0">
+      <div className="navbar bg-base-100 shadow-md fixed inset-x-100 top-0 z-40">
         <div className="navbar-start">
           {/* Compact navigation bar */}
           <div className="dropdown">
@@ -64,7 +66,7 @@ export default function Navbar() {
           <Tabs></Tabs>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <ThemeController></ThemeController>
         </div>
       </div>
     </>
