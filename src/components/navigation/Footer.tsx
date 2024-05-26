@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <>
-      <footer className="footer items-center p-4 bg-neutral text-neutral-content fixed inset-x-0 bottom-0">
+      <footer className="footer items-center p-4 bg-neutral text-neutral-content fixed inset-x-0 bottom-0 sm:grid hidden">
         <aside className="items-center grid-flow-col">
           <svg
             width="36"

@@ -1,31 +1,13 @@
 import TabsButton from "./TabsButton.js";
-import { useContext } from "react";
-import { MyContext } from "../../GlobalVariableProvider.js";
+import { Link, useLocation } from "react-router-dom";
 import { TabNames } from "./TabNames.js";
 
-
-export default function Tabs() {
-  const {globalVariable, setGlobalVariable } = useContext(MyContext);
-
-  function PageManager(page: string) {
-    setGlobalVariable(page);
-  }
-
+export default function Tabs(this: any) {
   return (
     <>
       <div role="tablist" className="tabs tabs-boxed">
-        <TabsButton classProperties="tab"
-          isSelected={globalVariable == TabNames.tab1}
-          onClick={() => PageManager(TabNames.tab1)}
-        >
-          Menu
-        </TabsButton>
-        <TabsButton classProperties="tab"
-          isSelected={globalVariable == TabNames.tab2}
-          onClick={() => PageManager(TabNames.tab2)}
-        >
-          Albums
-        </TabsButton>
+        <TabsButton classProperties="tab" isSelected={useLocation().pathname === "/"}><Link to={TabNames.tab1}>Menu</Link></TabsButton>
+        <TabsButton classProperties="tab" isSelected={useLocation().pathname === "/albums"}><Link to={TabNames.tab2}>Albums</Link></TabsButton>
       </div>
     </>
   );

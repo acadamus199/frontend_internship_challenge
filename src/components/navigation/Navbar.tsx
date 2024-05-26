@@ -1,13 +1,12 @@
+import { TabNames } from "./tabs/TabNames";
 import Tabs from "./tabs/Tabs";
 import TabsButton from "./tabs/TabsButton";
-import { MyContext } from "../GlobalVariableProvider";
-import { useContext, useState } from "react";
-import { TabNames } from "./tabs/TabNames";
 import ThemeController from "./ThemeController";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
-  const { globalVariable, setGlobalVariable } = useContext(MyContext);
-  
+  //const { globalVariable, setGlobalVariable } = useContext(MyContext);
+
   return (
     <>
       <div className="navbar bg-base-100 shadow-md fixed inset-x-100 top-0 z-40">
@@ -35,32 +34,16 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <TabsButton
-                  classProperties="tab"
-                  isSelected={globalVariable == TabNames.tab1}
-                  onClick={() => setGlobalVariable(TabNames.tab1)}
-                >
-                  Menu
-                </TabsButton>
+                <TabsButton classProperties="tab" isSelected={useLocation().pathname === TabNames.tab1}><Link to={TabNames.tab1}>Menu</Link></TabsButton>
+
               </li>
               <li>
-                <TabsButton
-                  classProperties="tab"
-                  isSelected={globalVariable == TabNames.tab2}
-                  onClick={() => setGlobalVariable(TabNames.tab2)}
-                >
-                  Albums
-                </TabsButton>
+                <TabsButton classProperties="tab" isSelected={useLocation().pathname === TabNames.tab2}><Link to={TabNames.tab2}>Albums</Link></TabsButton>
               </li>
             </ul>
           </div>
           {/* Normal navigation bar */}
-          <TabsButton
-            classProperties="btn btn-ghost text-xl"
-            onClick={() => setGlobalVariable(TabNames.tab1)}
-          >
-            iTunes albums
-          </TabsButton>
+          <TabsButton classProperties="btn btn-ghost text-xl"><Link to={TabNames.tab1}>iTunes albums</Link></TabsButton>
         </div>
         <div className="navbar-center hidden lg:flex">
           <Tabs></Tabs>
