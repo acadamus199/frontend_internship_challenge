@@ -2,21 +2,54 @@ import { useEffect, useState } from "react";
 import { JSON_NAMES } from "../../../json_names.tsx";
 import FetchLayout from "./FetchLayout.js";
 import Modal from "./Modal.tsx";
+import SelectAmount from "./SelectAmount.tsx";
 
 export default function Fetch() {
   const [data, setData] = useState<never[]>([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [query,setQuery] = useState("");
 
   useEffect(() => {
     fetch("https://itunes.apple.com/us/rss/topalbums/limit=100/json")
       .then((res) => res.json())
       .then((info) => {
         setData(info.feed.entry);
+        setQuery(info.feed.entry.length);
       });
   }, []);
+
+  const searchItems = (searchValue: string) => {
+    setSearchInput(searchValue);
+    if (searchInput !== "") {
+      const filteredData = data.filter((prop: any) => {
+        return Object.values(prop["im:name"].label)
+          .join("")
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(data);
+    }
+  };
+  function SelectLimiter(e: any){
+    setQuery(e)
+  }
+
   return (
     <>
-      <label className="input input-bordered ml-auto flex items-center gap-2">
-        <input type="text" className="grow" placeholder="Search"/>
+    <div className="flex">
+    <SelectAmount data={data} query={query} onChange={(e: any) => SelectLimiter(e.target.value)}/>
+      <label className="input input-bordered flex items-center gap-2 w-64 ml-auto m-5 mb-0">
+        <input
+          type="text"
+          className="grow"
+          placeholder="Search"
+          onChange={(e) => {
+            searchItems(e.target.value);
+          }}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -30,27 +63,50 @@ export default function Fetch() {
           />
         </svg>
       </label>
-      {data.slice(0, 30).map((prop, index) => (
-        <>
-          <Modal
-            title={JSON_NAMES.title(prop)}
-            artist={JSON_NAMES.artist(prop)}
-            imageModal={JSON_NAMES.image(prop, 2)}
-            price={JSON_NAMES.price(prop)}
-            priceCurrency={JSON_NAMES.priceCurrency(prop)}
-            itemCount={JSON_NAMES.itemCount(prop)}
-            releaseDate={JSON_NAMES.releaseDate(prop)}
-          >
-            <FetchLayout
-              key={JSON_NAMES.title(prop)}
-              index={index + 1}
-              title={JSON_NAMES.title(prop)}
-              artist={JSON_NAMES.artist(prop)}
-              image={JSON_NAMES.image(prop, 1)} //JSON can only have index from 0-2
-            ></FetchLayout>
-          </Modal>
-        </>
-      ))}
+      </div>
+      {searchInput.length > 1
+        ? filteredResults.map((prop, index) => {
+            return (
+              <Modal
+                title={JSON_NAMES.title(prop)}
+                artist={JSON_NAMES.artist(prop)}
+                imageModal={JSON_NAMES.image(prop, 2)}
+                price={JSON_NAMES.price(prop)}
+                priceCurrency={JSON_NAMES.priceCurrency(prop)}
+                itemCount={JSON_NAMES.itemCount(prop)}
+                releaseDate={JSON_NAMES.releaseDate(prop)}
+              >
+                <FetchLayout
+                  key={JSON_NAMES.title(prop)}
+                  index={index + 1}
+                  title={JSON_NAMES.title(prop)}
+                  artist={JSON_NAMES.artist(prop)}
+                  image={JSON_NAMES.image(prop, 1)} //JSON can only have index from 0-2
+                ></FetchLayout>
+              </Modal>
+            );
+          })
+        : data.slice(0,+query).map((prop, index) => (
+            <>
+              <Modal
+                title={JSON_NAMES.title(prop)}
+                artist={JSON_NAMES.artist(prop)}
+                imageModal={JSON_NAMES.image(prop, 2)}
+                price={JSON_NAMES.price(prop)}
+                priceCurrency={JSON_NAMES.priceCurrency(prop)}
+                itemCount={JSON_NAMES.itemCount(prop)}
+                releaseDate={JSON_NAMES.releaseDate(prop)}
+              >
+                <FetchLayout
+                  key={JSON_NAMES.title(prop)}
+                  index={index + 1}
+                  title={JSON_NAMES.title(prop)}
+                  artist={JSON_NAMES.artist(prop)}
+                  image={JSON_NAMES.image(prop, 1)} //JSON can only have index from 0-2
+                ></FetchLayout>
+              </Modal>
+            </>
+          ))}
     </>
   );
 }
