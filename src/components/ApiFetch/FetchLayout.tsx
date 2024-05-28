@@ -9,8 +9,7 @@ const FetchLayout: React.FC<FetchL> = ({ index, image, title, artist }) => {
   function capitalizeFirst(str: any) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  const cond = (title.length > 30)
-
+  
   return (
     <>
       <div className="flex flex-row gap-5 m-3 border-2 p-1 cursor-pointer transition-all ease-in-out hover:-translate-x-2 hover:bg-slate-100 truncate" >
