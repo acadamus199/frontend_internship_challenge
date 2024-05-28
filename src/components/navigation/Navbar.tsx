@@ -34,11 +34,11 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <TabsButton classProperties="tab" isSelected={useLocation().pathname === TabNames.tab1}><Link to={TabNames.tab1}>Menu</Link></TabsButton>
+                <TabsButton classProperties="tab"><Link to={TabNames.tab1}>Menu</Link></TabsButton>
 
               </li>
               <li>
-                <TabsButton classProperties="tab" isSelected={useLocation().pathname === TabNames.tab2}><Link to={TabNames.tab2}>Albums</Link></TabsButton>
+                <TabsButton classProperties="tab"><Link to={TabNames.tab2}>Albums</Link></TabsButton>
               </li>
             </ul>
           </div>
