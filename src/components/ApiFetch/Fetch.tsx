@@ -4,6 +4,7 @@ import FetchLayout from "./FetchLayout.js";
 import Modal from "./Modal.tsx";
 import SelectAmount from "./SelectAmount.tsx";
 import LoadingComponent from "../LoadingComponent.tsx";
+import SearchBar from "../SearchBar.tsx";
 
 export default function Fetch() {
   const [data, setData] = useState<never[]>([]);
@@ -18,15 +19,11 @@ export default function Fetch() {
       .then((info) => {
         setData(info.feed.entry);
         setQuery(info.feed.entry.length);
+        setLoading(false)
       });
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2000)
-  }, [])
-
-
-  const searchItems = (searchValue: string) => {
+  function searchItems(searchValue: string) {
     setSearchInput(searchValue);
     if (searchInput !== "") {
       const filteredData = data.filter((prop: any) => {
@@ -40,37 +37,12 @@ export default function Fetch() {
       setFilteredResults(data);
     }
   };
-  function SelectLimiter(e: any) {
-    setQuery(e)
-  }
 
   return (
     <>
       <div className="flex">
-        <SelectAmount data={data} query={query} onChange={(e: any) => SelectLimiter(e.target.value)} />
-        {/* SearchBar */}
-        <label className="input input-bordered flex items-center gap-2 w-64 ml-auto m-5 mb-0">
-          <input
-            type="text"
-            className="grow"
-            placeholder="Search"
-            onChange={(e) => {
-              searchItems(e.target.value);
-            }}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="w-4 h-4 opacity-70"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </label>
+        <SelectAmount data={data} query={query} onChange={(e: any) => setQuery(e.target.value)} />
+        <SearchBar onChange={searchItems}></SearchBar>
       </div>
       <LoadingComponent disp={loading} />
       {loading ? undefined : searchInput.length > 1
@@ -85,6 +57,7 @@ export default function Fetch() {
               priceCurrency={JSON_NAMES.priceCurrency(prop)}
               itemCount={JSON_NAMES.itemCount(prop)}
               releaseDate={JSON_NAMES.releaseDate(prop)}
+              link={JSON_NAMES.link(prop)}
             >
               <FetchLayout
                 index={index + 1}
@@ -105,6 +78,7 @@ export default function Fetch() {
               priceCurrency={JSON_NAMES.priceCurrency(prop)}
               itemCount={JSON_NAMES.itemCount(prop)}
               releaseDate={JSON_NAMES.releaseDate(prop)}
+              link={JSON_NAMES.link(prop)}
             >
               <FetchLayout
                 key={JSON_NAMES.title(prop)}

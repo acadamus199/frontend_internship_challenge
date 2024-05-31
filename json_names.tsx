@@ -7,5 +7,6 @@ export const JSON_NAMES = {
         priceCurrency: (prop : any) => {return prop["im:price"].attributes.currency},
         contentType: (prop : any) => {return prop['im:contentType'].attributes.label},
         artist: (prop : any) => {return prop['im:artist'].label},
-        releaseDate: (prop : any) => {return prop['im:releaseDate'].attributes.label}
+        releaseDate: (prop : any) => {return prop['im:releaseDate'].attributes.label},
+        link: (prop: any) => {return prop['link'].attributes.href}
 };
