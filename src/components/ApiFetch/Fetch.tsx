@@ -77,6 +77,7 @@ export default function Fetch() {
         ? filteredResults.slice(0, +query).map((prop, index) => {
           return (
             <Modal
+              key={JSON_NAMES.title(prop)}
               title={JSON_NAMES.title(prop)}
               artist={JSON_NAMES.artist(prop)}
               imageModal={JSON_NAMES.image(prop, 2)}
@@ -86,7 +87,6 @@ export default function Fetch() {
               releaseDate={JSON_NAMES.releaseDate(prop)}
             >
               <FetchLayout
-                key={JSON_NAMES.title(prop)}
                 index={index + 1}
                 title={JSON_NAMES.title(prop)}
                 artist={JSON_NAMES.artist(prop)}

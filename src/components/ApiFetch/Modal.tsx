@@ -23,7 +23,7 @@ const Modal: React.FC<Mod> = ({ children, imageModal, title, artist, price, pric
       <input type="checkbox" id={title} className="modal-toggle" />
       <div className="modal" role="dialog">
         <div className="modal-box truncate">
-          <center><img className="lg:w-80" src={imageModal} alt="" /></center>
+          <center><img src={imageModal} alt="" /></center>
           <center>
             <div onMouseEnter={() => { setShow(title); setArt(artist); setDivid("h-4 mt-3 mb-4") }} onMouseOut={() => { setShow(title.length > 20 ? title.slice(0, 20) + ".." : title); setArt(artist.length > 15 ? artist?.slice(0, 15) + ".." : artist); setDivid("divider") }} className={`${divid} text-sm sm:text-lg font-semibol hover:animate-marquee`}>{show} - {art}</div>
           </center>
