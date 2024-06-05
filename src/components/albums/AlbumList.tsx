@@ -1,32 +1,24 @@
 import { useEffect, useState } from "react";
 import { JSON_NAMES } from "../../../json_names.tsx";
-import FetchLayout from "./FetchLayout.js";
+import FetchLayout from "./AlbumListLayout.js";
 import Modal from "./Modal.tsx";
-import SelectAmount from "./SelectAmount.tsx";
+import SelectAmount from "../SelectAmount.tsx";
 import LoadingComponent from "../LoadingComponent.tsx";
 import SearchBar from "../SearchBar.tsx";
+import { fetchDataFromApi } from "../service/ApiConntection.tsx";
 
-export default function Fetch() {
-  const [data, setData] = useState<never[]>([]);
+export default function AlbumList({ data, query, loading }: any) {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("https://itunes.apple.com/us/rss/topalbums/limit=100/json")
-      .then((res) => res.json())
-      .then((info) => {
-        setData(info.feed.entry);
-        setQuery(info.feed.entry.length);
-        setLoading(false)
-      });
-  }, []);
+  const [query2, setQuery2] = useState(query)
+  const [data2, setData2] = useState(data)
+  const [loading2, setLoading2] = useState(loading)
 
   function searchItems(searchValue: string) {
     setSearchInput(searchValue);
+    console.log(searchInput)
     if (searchInput !== "") {
-      const filteredData = data.filter((prop: any) => {
+      const filteredData = data2.filter((prop: any) => {
         return Object.values(prop["im:name"].label)
           .join("")
           .toLowerCase()
@@ -34,19 +26,28 @@ export default function Fetch() {
       });
       setFilteredResults(filteredData);
     } else {
-      setFilteredResults(data);
+      setFilteredResults(data2);
     }
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("apiData")
+    if (storedData) {
+      setData2(JSON.parse(storedData))
+      setLoading2(!!!localStorage.getItem("loadingState"))
+      setQuery2(localStorage.getItem("dataLength"))
+    }
+  }, [])
 
   return (
     <>
       <div className="flex">
-        <SelectAmount data={data} query={query} onChange={(e: any) => setQuery(e.target.value)} />
+        <SelectAmount data={data2} query={query2} onChange={(e: any) => setQuery2(e.target.value)} />
         <SearchBar onChange={searchItems}></SearchBar>
       </div>
-      <LoadingComponent disp={loading} />
-      {loading ? undefined : searchInput.length > 1
-        ? filteredResults.slice(0, +query).map((prop, index) => {
+      <LoadingComponent disp={loading2} />
+      {loading2 ? undefined : searchInput.length > 1
+        ? filteredResults.slice(0, +query2).map((prop, index) => {
           return (
             <Modal
               key={JSON_NAMES.title(prop)}
@@ -68,7 +69,7 @@ export default function Fetch() {
             </Modal>
           );
         })
-        : data.slice(0, +query).map((prop, index) => (
+        : data2.slice(0, +query2).map((prop: any, index: number) => (
           <>
             <Modal
               title={JSON_NAMES.title(prop)}
