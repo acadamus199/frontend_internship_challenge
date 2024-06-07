@@ -17,7 +17,7 @@ export default function HomePage() {
             </div>
             <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                 <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-                    <img id="apple" src={ThemeImage.darkApple} alt="appleImage" />
+                    <img id={ThemeImage.imageID} src={ThemeImage.darkApple} alt="appleImage" />
                 </div>
             </div>
             <div

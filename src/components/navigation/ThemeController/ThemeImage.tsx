@@ -3,5 +3,6 @@ import light from "../../../assets/apple-icon-light.png"
 
 export const ThemeImage = {
     darkApple: dark,
-    lightApple: light
+    lightApple: light,
+    imageID: "apple"
 }

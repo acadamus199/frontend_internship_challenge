@@ -5,7 +5,7 @@ import { ThemeImage } from "./ThemeImage";
 
 export default function ThemeController() {
     const [theme, setTheme] = useState("light");
-    const doc = document.getElementById("japko")
+    const doc = document.getElementById(ThemeImage.imageID)
 
     useEffect(() => {
         if (theme === "dark") {
