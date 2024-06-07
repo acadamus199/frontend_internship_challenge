@@ -5,7 +5,6 @@ import Modal from "./Modal.tsx";
 import SelectAmount from "../SelectAmount.tsx";
 import LoadingComponent from "../LoadingComponent.tsx";
 import SearchBar from "../SearchBar.tsx";
-import { fetchDataFromApi } from "../service/ApiConntection.tsx";
 
 export default function AlbumList({ data, query, loading }: any) {
   const [filteredResults, setFilteredResults] = useState([]);
@@ -46,11 +45,11 @@ export default function AlbumList({ data, query, loading }: any) {
         <SearchBar onChange={searchItems}></SearchBar>
       </div>
       <LoadingComponent disp={loading2} />
-      {loading2 ? undefined : searchInput.length > 1
+      {loading2 ? null : searchInput.length > 1
         ? filteredResults.slice(0, +query2).map((prop, index) => {
           return (
             <Modal
-              key={JSON_NAMES.title(prop)}
+              key={`${JSON_NAMES.title(prop)}-${index}`}
               title={JSON_NAMES.title(prop)}
               artist={JSON_NAMES.artist(prop)}
               imageModal={JSON_NAMES.image(prop, 2)}
@@ -70,26 +69,25 @@ export default function AlbumList({ data, query, loading }: any) {
           );
         })
         : data2.slice(0, +query2).map((prop: any, index: number) => (
-          <>
-            <Modal
+          <Modal
+            key={`${JSON_NAMES.title(prop)}-${index}`}
+            title={JSON_NAMES.title(prop)}
+            artist={JSON_NAMES.artist(prop)}
+            imageModal={JSON_NAMES.image(prop, 2)}
+            price={JSON_NAMES.price(prop)}
+            priceCurrency={JSON_NAMES.priceCurrency(prop)}
+            itemCount={JSON_NAMES.itemCount(prop)}
+            releaseDate={JSON_NAMES.releaseDate(prop)}
+            link={JSON_NAMES.link(prop)}
+          >
+            <FetchLayout
+              key={JSON_NAMES.title(prop)}
+              index={index + 1}
               title={JSON_NAMES.title(prop)}
               artist={JSON_NAMES.artist(prop)}
-              imageModal={JSON_NAMES.image(prop, 2)}
-              price={JSON_NAMES.price(prop)}
-              priceCurrency={JSON_NAMES.priceCurrency(prop)}
-              itemCount={JSON_NAMES.itemCount(prop)}
-              releaseDate={JSON_NAMES.releaseDate(prop)}
-              link={JSON_NAMES.link(prop)}
-            >
-              <FetchLayout
-                key={JSON_NAMES.title(prop)}
-                index={index + 1}
-                title={JSON_NAMES.title(prop)}
-                artist={JSON_NAMES.artist(prop)}
-                image={JSON_NAMES.image(prop, 1)} //JSON can only have index from 0-2
-              ></FetchLayout>
-            </Modal>
-          </>
+              image={JSON_NAMES.image(prop, 1)} //JSON can only have index from 0-2
+            ></FetchLayout>
+          </Modal>
         ))}
     </>
   );

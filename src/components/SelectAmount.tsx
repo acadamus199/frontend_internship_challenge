@@ -15,13 +15,13 @@ const SelectAmount: React.FC<SAm> = ({ data, query, onChange }) => {
         value={query}
         onChange={onChange}
       >
-        <option value={data.length} selected>
+        <option value={data.length}>
           All albums
         </option>
         <option value={calculatedVal(8)}>{calculatedVal(8)}</option>
         <option value={calculatedVal(4)}>{calculatedVal(4)}</option>
         <option value={calculatedVal(2)}>{calculatedVal(2)}</option>
-        <option value={calculatedVal(2)+calculatedVal(4)}>{calculatedVal(2)+calculatedVal(4)}</option>
+        <option value={calculatedVal(2) + calculatedVal(4)}>{calculatedVal(2) + calculatedVal(4)}</option>
       </select>
     </>
   );
