@@ -24,12 +24,17 @@ const Modal: React.FC<Mod> = ({
   releaseDate,
   link
 }) => {
+  // TODO: [19] Niezrozumiałe nazwy zmiennych, show, setShow -> visibleTitle, setVisibleTitle
   const [show, setShow] = useState<any>(
     title.length > 20 ? title.slice(0, 20) + ".." : title
   );
+
+  // TODO: [20] Niezrozumiałe nazwy zmiennych, art, setArt -> visibleArtist, setVisibleArtist
   const [art, setArt] = useState<any>(
     artist.length > 15 ? artist?.slice(0, 15) + ".." : artist
   );
+
+  // TODO: [21] Niezrozumiałe nazwy zmiennych, divid, setDivid -> headlineClassNames, setHeadlineClassNames
   const [divid, setDivid] = useState<string>("divider");
 
   return (
@@ -67,7 +72,7 @@ const Modal: React.FC<Mod> = ({
           <p>Date: {releaseDate}</p>
           <div className="modal-action">
             <label htmlFor={link} className="btn btn-accent"><Link to={link} target="_blank" rel="noopener noreferrer">Try now!</Link></label>
-            
+
             <label htmlFor={title} className="btn">
               Close
             </label>

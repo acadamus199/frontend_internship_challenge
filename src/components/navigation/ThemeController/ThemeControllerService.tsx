@@ -3,8 +3,12 @@ import ThemeControllerLayout from "./ThemeControllerLayout";
 import { ThemeImage } from "./ThemeImage";
 
 
+// TODO: [26] To nie jest service, tylko component (więc 'service' z nazwy pliku do usunięcia)
+// ::::: - Controller też swoje znaczy (pewnie kojarzysz model MVC, Model-View-Controller)
+// ::::: Dlatego proponuję nazwać component ThemeSwitch (nic związanego z serwisami/controllerami)
 export default function ThemeController() {
     const [theme, setTheme] = useState("light");
+    // TODO: [27] Semantyczna nazwa, to chyba bardziej jest logoElement niż doc
     const doc = document.getElementById(ThemeImage.imageID)
 
     useEffect(() => {

@@ -9,7 +9,10 @@ import SearchBar from "../SearchBar.tsx";
 export default function AlbumList({ data, query, loading }: any) {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  // TODO: [6] Tutaj "query2" to tak naprawdę ilość albumów na stronę, więc proponuję semantyczną nazwę, np. pageAlbumsAmount
+  // ::::: Tym bardziej, że po przeniesieniu fetchowania albumów do tego komponentu, będziesz też miał tutaj "allAlbumsAmount"
   const [query2, setQuery2] = useState(query)
+  // TODO: [7] Ten 2 zduplikowane states też będą mogły być wywalone po przeniesieniu fetchowania tutaj
   const [data2, setData2] = useState(data)
   const [loading2, setLoading2] = useState(loading)
 
@@ -29,6 +32,7 @@ export default function AlbumList({ data, query, loading }: any) {
     }
   };
 
+  // TODO: [8] Też do usunięcia po przeniesieniu fetchowania tutaj
   useEffect(() => {
     const storedData = localStorage.getItem("apiData")
     if (storedData) {
@@ -45,6 +49,9 @@ export default function AlbumList({ data, query, loading }: any) {
         <SearchBar onChange={searchItems}></SearchBar>
       </div>
       <LoadingComponent disp={loading2} />
+      {/* TODO: [9] Usuń zduplikowany kod <Modal>...</Modal> */}
+      {/* ::::: Nie musisz raz wyświetlasz wszystkie albumy, a raz przefiltrowane */}
+      {/* ::::: Możesz wyświetlać tylko filteredData, czyli po prostu przypisywać mu wszystkie albumy jeśli nie nic wpisane w searchbar */}
       {loading2 ? null : searchInput.length > 1
         ? filteredResults.slice(0, +query2).map((prop, index) => {
           return (
@@ -59,6 +66,11 @@ export default function AlbumList({ data, query, loading }: any) {
               releaseDate={JSON_NAMES.releaseDate(prop)}
               link={JSON_NAMES.link(prop)}
             >
+              {/*TODO: [10] "Layout" (podobnie jak "page") też ma swoje konkretne przeznaczenie*/}
+              {/*::::: To jest component przechowujący TYLKO layout, czyli jedyne co do niego przekazujesz to children*/}
+              {/*::::: (W sumie tak jak na przykład masz w Body.tsx. To jest idealny przykład layoutu)*/}
+              {/*::::: Tutaj masz zwykły komponent, bo przekazujesz mu dane i coś z nimi robisz*/}
+              {/*::::: Proponuję bardziej semantyczną nazwę, np. ModalHandler.tsx */}
               <FetchLayout
                 index={index + 1}
                 title={JSON_NAMES.title(prop)}

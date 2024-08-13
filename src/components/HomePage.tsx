@@ -1,5 +1,12 @@
 import { ThemeImage } from "./navigation/ThemeController/ThemeImage"
 
+// TODO: [5] "Page" to nie to samo co "component"
+// ::::: Zobacz sobie czym jest atomic design: https://szkolareacta.pl/atomic-design/
+// ::::: Ogólne założenie jest takie, że "page" składa się z "components"
+// ::::: i jest to kompletny widok aplikacji na danej stronie, czyli wszystko łącznie z headerem, footerem itp.
+// ::::: W twoim przypadku nie korzystasz wcale z idei pages (co jest spoko), bo to nie jest cała strona home, tylko jej środek (<Navbar /> i <Footer /> jest w <App />)
+// ::::: Tutaj trzeba by było tylko poprawić nazewnictwo, HomePage.tsx -> Home.tsx
+
 export default function HomePage() {
     return (
         <div className="relative isolate px-6 pt-14 lg:px-8 animate-spin">

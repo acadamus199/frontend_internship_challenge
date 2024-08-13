@@ -4,6 +4,9 @@ import TabsButton from "./tabs/TabsButton";
 import ThemeController from "./ThemeController/ThemeControllerService";
 import { Link, useLocation } from "react-router-dom";
 
+// TODO: [23] W tym pliku jest trochę błędów, które mogłyby być wyłapane przez eslint
+// ::::: - 'TS6133: useLocation is declared but its value is never read.'
+// ::::: - Zakomentowana linijka useContext(), nieużywany kod powinien być usunięty
 export default function Navbar() {
   //const { globalVariable, setGlobalVariable } = useContext(MyContext);
 

@@ -5,11 +5,13 @@ type FetchL = {
   artist?: string;
 };
 
+// TODO: [22] To jest komponent, więc nazwa pliku powinna być taka sama jak nazwa funkcji którą zwraca
+// ::::: (w TODO: [10] wyjaśniłam czemu proponuję Modalhandler)
 const FetchLayout: React.FC<FetchL> = ({ index, image, title, artist }) => {
   function capitalizeFirst(str: any) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  
+
   return (
     <>
       <div className="flex flex-row gap-5 m-3 border-2 p-1 cursor-pointer transition-all ease-in-out hover:-translate-x-2 hover:bg-slate-100 truncate" >
