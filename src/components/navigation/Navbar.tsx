@@ -2,7 +2,7 @@ import { TabNames } from "./tabs/TabNames";
 import Tabs from "./tabs/Tabs";
 import TabsButton from "./tabs/TabsButton";
 import ThemeController from "./ThemeController/ThemeControllerService";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   //const { globalVariable, setGlobalVariable } = useContext(MyContext);
